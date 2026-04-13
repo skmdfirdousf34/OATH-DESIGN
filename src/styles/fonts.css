@@ -1,0 +1,22 @@
+/* ─── Font Stack ──────────────────────────────────────────────── */
+/*
+  Plus Jakarta Sans — premium geometric sans with tight weight control
+  Weights used:
+    300 → .font-light    → eyebrow captions, meta labels
+    400 → .font-normal   → body copy, descriptions
+    500 → .font-medium   → secondary labels, sub-values
+    600 → .font-semibold → card titles, list items
+    700 → .font-bold     → section headings, stat labels
+    800 → .font-extrabold→ hero numbers, primary headings, values
+*/
+
+:root {
+  --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  font-family: var(--font-display) !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
