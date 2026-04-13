@@ -359,11 +359,11 @@ function MetricCard({ icon, label, value, change, positive }: {
     <div className="bg-white/5 backdrop-blur-xl rounded-[20px] p-4 border border-white/10 shadow-[0_8px_24px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.15)] hover:bg-white/10 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 relative overflow-hidden group">
       <div className={`absolute top-0 right-0 w-20 h-20 blur-[30px] rounded-full pointer-events-none opacity-30 group-hover:opacity-60 transition-opacity ${positive ? 'bg-green-500' : 'bg-gray-500'}`} />
       <div className="flex items-center gap-2 mb-2 text-white/40 relative z-10">
-        {icon}
-        <span className="text-[10px] font-[700] uppercase tracking-[0.15em]">{label}</span>
+        <div className="scale-90 origin-left">{icon}</div>
+        <span className="text-[9px] min-[400px]:text-[10px] font-[700] uppercase tracking-[0.15em]">{label}</span>
       </div>
-      <div className="text-[28px] font-[800] mb-0.5 text-white leading-none tracking-tight relative z-10">{value}</div>
-      <div className={`text-[11px] font-medium tracking-wide relative z-10 ${positive ? 'text-green-400' : 'text-white/30'}`}>{change}</div>
+      <div className="text-[22px] min-[400px]:text-[28px] font-[800] mb-0.5 text-white leading-none tracking-tight relative z-10">{value}</div>
+      <div className={`text-[10px] min-[400px]:text-[11px] font-medium tracking-wide relative z-10 ${positive ? 'text-green-400' : 'text-white/30'}`}>{change}</div>
     </div>
   );
 }
@@ -398,20 +398,20 @@ export function Analytics({ onNavigate }: AnalyticsProps) {
   return (
     <div className="min-h-full pb-20">
       {/* Header */}
-      <div className="px-6 pt-12 pb-6">
+      <div className="px-5 min-[400px]:px-6 pt-8 md:pt-12 pb-4 md:pb-6">
         <div className="flex items-center gap-4 mb-6">
           <button
             onClick={() => onNavigate('home')}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.1)] active:scale-90 hover:bg-white/10 transition-all"
+            className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.1)] active:scale-90 hover:bg-white/10 transition-all"
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
-          <h1 className="text-[26px] font-[800] tracking-[-0.02em] text-white">Analytics</h1>
+          <h1 className="text-[22px] md:text-[26px] font-[800] tracking-[-0.02em] text-white">Analytics</h1>
         </div>
       </div>
 
       {/* Key Metrics */}
-      <div className="px-6 mb-6">
+      <div className="px-5 min-[400px]:px-6 mb-6">
         <div className="grid grid-cols-2 gap-3">
           <MetricCard icon={<Clock className="w-5 h-5" />}    label="This Week"  value="72.5h"  change="+12%"    positive={true} />
           <MetricCard icon={<Target className="w-5 h-5" />}   label="Focus Score" value="87"    change="+9"      positive={true} />
@@ -421,7 +421,7 @@ export function Analytics({ onNavigate }: AnalyticsProps) {
       </div>
 
       {/* ── WEEKLY PILL BAR CHART ─────────────────────────────── */}
-      <div className="px-6 mb-6">
+      <div className="px-5 min-[400px]:px-6 mb-6">
         <div className="bg-white/5 backdrop-blur-xl rounded-[24px] p-5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.15)] relative overflow-hidden group hover:bg-white/10 transition-all duration-300">
           <div className="absolute top-[-30%] right-[-10%] w-[120px] h-[120px] bg-gradient-to-br from-green-600/30 to-transparent blur-[50px] rounded-full pointer-events-none opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
           <div className="flex items-center justify-between mb-5">
@@ -442,7 +442,7 @@ export function Analytics({ onNavigate }: AnalyticsProps) {
       </div>
 
       {/* ── FOCUS SCORE LINE CHART ────────────────────────────── */}
-      <div className="px-6 mb-6">
+      <div className="px-5 min-[400px]:px-6 mb-6">
         <div className="bg-white/5 backdrop-blur-xl rounded-[24px] p-5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.15)] relative overflow-hidden group hover:bg-white/10 transition-all duration-300">
           <div className="absolute top-[-30%] left-[-10%] w-[120px] h-[120px] bg-gradient-to-br from-purple-600/30 to-transparent blur-[50px] rounded-full pointer-events-none opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
           <h3 className="text-[11px] font-[700] tracking-[0.15em] uppercase text-white/40 mb-4">Focus Score Trend</h3>
@@ -456,7 +456,7 @@ export function Analytics({ onNavigate }: AnalyticsProps) {
       </div>
 
       {/* ── SUBJECT DISTRIBUTION ─────────────────────────────── */}
-      <div className="px-6 mb-6">
+      <div className="px-5 min-[400px]:px-6 mb-6">
         <div className="bg-white/5 backdrop-blur-xl rounded-[24px] p-5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.15)] relative overflow-hidden group hover:bg-white/10 transition-all duration-300">
           <div className="absolute bottom-[-30%] right-[-10%] w-[120px] h-[120px] bg-gradient-to-br from-blue-600/30 to-transparent blur-[50px] rounded-full pointer-events-none opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
           <h3 className="text-[11px] font-[700] tracking-[0.15em] uppercase text-white/40 mb-5">Subject Distribution</h3>

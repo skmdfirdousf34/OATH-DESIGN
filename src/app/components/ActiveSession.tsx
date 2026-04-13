@@ -38,28 +38,28 @@ export function ActiveSession({ onNavigate, onEndSession }: ActiveSessionProps) 
   return (
     <div className="min-h-full pb-20">
       {/* Header */}
-      <div className="px-6 pt-12 pb-6">
-        <div className="flex items-center justify-center mb-8">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center animate-pulse">
-            <Shield className="w-10 h-10" strokeWidth={2.5} />
+      <div className="px-5 min-[400px]:px-6 pt-10 md:pt-12 pb-4 md:pb-6">
+        <div className="flex items-center justify-center mb-6 md:mb-8">
+          <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center animate-pulse">
+            <Shield className="w-8 h-8 md:w-10 md:h-10" strokeWidth={2.5} />
           </div>
         </div>
 
-        <h1 className="text-3xl font-bold text-center mb-2">Session Active</h1>
-        <p className="text-gray-400 text-center text-sm">
+        <h1 className="text-2xl min-[400px]:text-3xl font-bold text-center mb-2">Session Active</h1>
+        <p className="text-gray-400 text-center text-[13px] min-[400px]:text-sm px-4">
           Distractions are blocked. Stay focused!
         </p>
       </div>
 
       {/* Timer */}
-      <div className="px-6 mb-8">
-        <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl p-8">
+      <div className="px-5 min-[400px]:px-6 mb-8">
+        <div className="bg-gradient-to-br from-blue-600 to-purple-600 rounded-[28px] p-6 min-[400px]:p-8 shadow-2xl">
           <div className="text-center">
-            <div className="text-sm text-white/80 mb-2">Study Time</div>
-            <div className="text-6xl font-bold tracking-tight mb-4">{formatTime(elapsedTime)}</div>
-            <div className="flex items-center justify-center gap-2 text-sm">
+            <div className="text-[12px] min-[400px]:text-sm text-white/80 mb-2 uppercase tracking-[0.1em] font-bold">Study Time</div>
+            <div className="text-5xl min-[400px]:text-6xl font-bold tracking-tighter mb-4 tabular-nums">{formatTime(elapsedTime)}</div>
+            <div className="flex items-center justify-center gap-2 text-[12px] min-[400px]:text-sm">
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-white/80">Recording...</span>
+              <span className="text-white/80 font-medium">Recording...</span>
             </div>
           </div>
         </div>
@@ -82,10 +82,10 @@ export function ActiveSession({ onNavigate, onEndSession }: ActiveSessionProps) 
       </div>
 
       {/* End Session Button */}
-      <div className="px-6">
+      <div className="px-5 min-[400px]:px-6">
         <button
           onClick={() => setShowEndModal(true)}
-          className="w-full bg-gradient-to-r from-green-600 to-emerald-600 rounded-xl py-4 px-6 font-semibold hover:from-green-500 hover:to-emerald-500 transition-all"
+          className="w-full bg-gradient-to-r from-green-600 to-emerald-600 rounded-2xl py-4 px-6 font-bold text-[16px] shadow-[0_8px_20px_rgba(16,185,129,0.3)] active:scale-95 transition-all"
         >
           End Session & Take Interview
         </button>

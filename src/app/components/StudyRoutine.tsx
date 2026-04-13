@@ -32,15 +32,15 @@ export function StudyRoutine({ onNavigate }: StudyRoutineProps) {
   return (
     <div className="min-h-full pb-20 pt-4">
       {/* Header */}
-      <div className="px-6 pt-8 pb-6">
+      <div className="px-5 min-[400px]:px-6 pt-6 md:pt-8 pb-4 md:pb-6">
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => onNavigate('home')}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.1)] active:scale-90 hover:bg-white/10 transition-all"
+            className="w-9 h-9 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.1)] active:scale-90 hover:bg-white/10 transition-all"
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </button>
-          <h1 className="text-[26px] font-[800] tracking-[-0.02em] text-white">Routine</h1>
+          <h1 className="text-[22px] min-[400px]:text-[26px] font-[800] tracking-[-0.02em] text-white">Routine</h1>
         </div>
 
         {/* Liquid Glass Thick Card */}
@@ -50,7 +50,7 @@ export function StudyRoutine({ onNavigate }: StudyRoutineProps) {
           <div className="flex items-center justify-between mb-4 relative z-10">
             <div>
               <div className="text-[10px] text-white/35 font-[700] uppercase tracking-[0.15em] mb-1">Daily Goals</div>
-              <div className="text-[40px] font-[800] leading-none tracking-[-0.03em] text-white">{totalHours} <span className="text-[20px] font-[400] text-white/40">h</span></div>
+              <div className="text-[32px] min-[400px]:text-[40px] font-[800] leading-none tracking-[-0.03em] text-white">{totalHours} <span className="text-[18px] min-[400px]:text-[20px] font-[400] text-white/40">h</span></div>
             </div>
             <div className="text-right flex flex-col items-end">
               <div className="text-[10px] text-white/35 font-[700] uppercase tracking-[0.15em] mb-1">Target</div>
@@ -97,7 +97,7 @@ export function StudyRoutine({ onNavigate }: StudyRoutineProps) {
       </div>
 
       {/* Recommendations */}
-      <div className="px-6 mb-6">
+      <div className="px-5 min-[400px]:px-6 mb-6">
         <h2 className="text-[11px] font-[700] tracking-[0.15em] uppercase text-white/40 mb-4 pl-1">Recommended</h2>
         <div className="bg-white/5 backdrop-blur-xl rounded-[24px] p-2 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.15)] flex flex-col gap-1">
             <RecommendationItem time="06:00 - 08:00" activity="Morning Self-Study" hours="2h" />

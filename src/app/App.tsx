@@ -34,15 +34,15 @@ export default function App() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#080808] sm:bg-[#111111] overflow-hidden sm:p-8">
-      {/* iOS Device Frame */}
+    <div className="flex items-center justify-center min-h-screen bg-[#080808] md:bg-[#111111] overflow-hidden md:p-6 lg:p-8">
+      {/* iOS Device Frame - Only on desktop (md+) */}
       <div 
-        className="relative w-full h-full sm:w-[390px] sm:h-[844px] bg-[#030303] text-[#F2F2F2] font-sans sm:rounded-[55px] sm:border-[12px] sm:border-black sm:shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_20px_40px_rgba(0,0,0,0.8)] overflow-hidden shrink-0 transform-gpu flex flex-col"
+        className="relative w-full h-[100dvh] md:w-[390px] md:h-[844px] bg-[#030303] text-[#F2F2F2] font-sans md:rounded-[55px] md:border-[12px] md:border-black md:shadow-[0_0_0_1px_rgba(255,255,255,0.1),0_20px_40px_rgba(0,0,0,0.8)] overflow-hidden shrink-0 transform-gpu flex flex-col"
         style={{ transform: 'translateZ(0)' }}
       >
         
         {/* Dynamic Island (Desktop only) */}
-        <div className="hidden sm:flex absolute top-0 w-full justify-center z-[100]">
+        <div className="hidden md:flex absolute top-0 w-full justify-center z-[100]">
           <div className="w-[125px] h-[35px] bg-black rounded-b-[24px]"></div>
         </div>
 
@@ -57,7 +57,7 @@ export default function App() {
         </div>
         
         {/* App Content Scroller */}
-        <div className="relative z-10 flex-1 w-full overflow-y-auto no-scrollbar scroll-smooth pb-[100px]">
+        <div className="relative z-10 flex-1 w-full overflow-y-auto no-scrollbar scroll-smooth pb-[120px]">
           {currentScreen === 'home' && <Home onNavigate={setCurrentScreen} />}
           {currentScreen === 'analytics' && <Analytics onNavigate={setCurrentScreen} />}
           {currentScreen === 'routine' && <StudyRoutine onNavigate={setCurrentScreen} />}
@@ -89,7 +89,7 @@ export default function App() {
         </div>
 
         {/* Global Bottom Navigation - Liquid Glass Magnetic Dock */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[92%] bg-black/40 backdrop-blur-2xl px-2 py-3 rounded-[32px] border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.8),inset_0_1px_rgba(255,255,255,0.15)] flex items-center justify-between z-50">
+        <div className="absolute bottom-[24px] md:bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[400px] bg-black/40 backdrop-blur-2xl px-2 py-3 rounded-[32px] border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.8),inset_0_1px_rgba(255,255,255,0.15)] flex items-center justify-between z-50 transition-all duration-300">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 opacity-50 rounded-[32px] pointer-events-none"></div>
 
           <button onClick={() => setCurrentScreen('home')} className="p-2 sm:p-2.5 rounded-full transition-all active:scale-90 flex-1 flex justify-center relative z-10 group">

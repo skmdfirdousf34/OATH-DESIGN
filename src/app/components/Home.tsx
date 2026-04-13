@@ -8,7 +8,7 @@ export function Home({ onNavigate }: HomeProps) {
   return (
     <div className="min-h-full pb-32 pt-4">
       {/* Header */}
-      <div className="px-6 pt-8 pb-6">
+      <div className="px-5 min-[400px]:px-6 pt-6 md:pt-8 pb-4 md:pb-6">
         <div className="flex items-center mb-10">
           <div className="flex items-center gap-2 bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
             <Shield className="w-5 h-5 text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" strokeWidth={2.5} />
@@ -16,15 +16,15 @@ export function Home({ onNavigate }: HomeProps) {
           </div>
         </div>
 
-        <h1 className="text-[46px] font-[800] leading-[1.04] mb-1 tracking-[-0.03em] text-white">
-          Keep <Shield className="w-9 h-9 inline-block mx-1 -mt-2 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" /> <br />
+        <h1 className="text-[34px] min-[400px]:text-[40px] md:text-[46px] font-[800] leading-[1.04] mb-1 tracking-[-0.03em] text-white">
+          Keep <Shield className="w-8 h-8 md:w-9 md:h-9 inline-block mx-1 -mt-2 text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]" /> <br />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400">Your Focus</span><br />
           Sharp
         </h1>
       </div>
 
       {/* Main Action Buttons */}
-      <div className="px-6 mb-8 mt-2 space-y-4">
+      <div className="px-5 min-[400px]:px-6 mb-8 mt-2 space-y-4">
         <button
           onClick={() => onNavigate('insights')}
           className="w-full relative overflow-hidden bg-white/5 backdrop-blur-xl rounded-[24px] p-[8px] pr-5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_rgba(255,255,255,0.15)] flex items-center justify-between group hover:bg-white/10 hover:scale-[1.02] active:scale-95 transition-all duration-300"
@@ -61,9 +61,9 @@ export function Home({ onNavigate }: HomeProps) {
       </div>
 
       {/* Quick Access Grid */}
-      <div className="px-6 mb-8">
-        <h2 className="text-[11px] font-bold tracking-[0.18em] uppercase text-white/30 mb-5 pl-2">Quick Access</h2>
-        <div className="grid grid-cols-2 gap-5">
+      <div className="px-5 min-[400px]:px-6 mb-8">
+        <h2 className="text-[11px] font-bold tracking-[0.18em] uppercase text-white/30 mb-4 pl-2">Quick Access</h2>
+        <div className="grid grid-cols-2 gap-3 min-[400px]:gap-5">
           <NotchedCard
             metric="#1"
             title="Rank Predictor"
@@ -84,9 +84,9 @@ export function Home({ onNavigate }: HomeProps) {
       </div>
 
       {/* Brief Stats */}
-      <div className="px-6 mb-4">
-        <h2 className="text-[11px] font-bold tracking-[0.18em] uppercase text-white/30 mb-5 pl-2">Brief Stats</h2>
-        <div className="grid grid-cols-2 gap-5">
+      <div className="px-5 min-[400px]:px-6 mb-4">
+        <h2 className="text-[11px] font-bold tracking-[0.18em] uppercase text-white/30 mb-4 pl-2">Brief Stats</h2>
+        <div className="grid grid-cols-2 gap-3 min-[400px]:gap-5">
           <NotchedCard
             metric="12"
             title="Streak"
