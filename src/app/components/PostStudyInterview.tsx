@@ -98,7 +98,7 @@ export function PostStudyInterview({ sessionData, onNavigate, onComplete }: Post
 
   if (showFinalResult) {
     return (
-      <div className="min-h-full pb-20 flex flex-col items-center justify-center px-6">
+      <div className="min-h-full pb-40 flex flex-col items-center justify-start pt-12 px-6">
         <div className="w-full max-w-md">
           <div className={`w-24 h-24 rounded-full mx-auto mb-6 flex items-center justify-center ${
             passed ? 'bg-green-500/20' : 'bg-red-500/20'
@@ -181,7 +181,7 @@ export function PostStudyInterview({ sessionData, onNavigate, onComplete }: Post
   }
 
   return (
-    <div className="min-h-full pb-20">
+    <div className="min-h-full pb-40">
       {/* Header */}
       <div className="px-6 pt-12 pb-6">
         <div className="flex items-center justify-between mb-6">

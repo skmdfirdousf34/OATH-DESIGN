@@ -1,4 +1,4 @@
-import { ArrowLeft, Target, Flame, Trophy, Award, ChevronRight, Shield, Bell, Lock, User, LogOut, Timer, Rocket, Moon, BrainCircuit, AlertCircle, MapPin, Zap, FlaskConical, Sigma } from 'lucide-react';
+import { ArrowLeft, Flame, ChevronRight, Shield, Bell, Lock, User, LogOut, Timer, Moon, AlertCircle, Zap, FlaskConical, Sigma } from 'lucide-react';
 
 interface ProfileProps {
   onNavigate: (screen: 'home' | 'analytics' | 'routine' | 'profile' | 'session' | 'interview') => void;

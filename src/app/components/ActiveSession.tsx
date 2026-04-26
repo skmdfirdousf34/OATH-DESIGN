@@ -93,8 +93,8 @@ export function ActiveSession({ onNavigate, onEndSession }: ActiveSessionProps) 
 
       {/* End Session Modal */}
       {showEndModal && (
-        <div className="fixed inset-0 bg-black/80 flex items-end z-50">
-          <div className="w-full bg-[#1a1a1a] rounded-t-3xl p-6 border-t border-gray-800">
+        <div className="fixed inset-0 bg-black/80 flex items-end z-[60]">
+          <div className="w-full bg-[#1a1a1a] rounded-t-3xl p-6 border-t border-gray-800 pb-36">
             <h3 className="text-xl font-bold mb-2">Session Summary</h3>
             <p className="text-sm text-gray-400 mb-6">
               Tell us what you studied to proceed to the interview
