@@ -1,0 +1,1321 @@
+/* ==========================================================================
+   Design Tokens & CSS Custom Properties (Moonlit Night Theme)
+   ========================================================================== */
+:root {
+  /* Dark Cosmic Moonlight Palette */
+  --bg-gradient-start: #040614; /* Deep Midnight Navy */
+  --bg-gradient-mid: #0B112C;   /* Mystical Indigo */
+  --bg-gradient-end: #1C0A35;   /* Midnight Violet */
+  
+  --text-main: #FFFFFF;         /* Crisp Moonlit White */
+  --text-muted: #D7CDE2;        /* Soft Lavender Slate */
+  --text-light: #AD9EC2;        /* Muted Violet-Gray */
+  
+  --primary-pink: #FF758F;      /* Glowing Rose Pink */
+  --primary-pink-hover: #FF4D6D;
+  --primary-pink-glow: rgba(255, 117, 143, 0.45);
+  
+  --gold-accent: #E6C566;       /* Luxurious Gold Accent */
+  --gold-glow: rgba(230, 197, 102, 0.22);
+  
+  --lavender-accent: #C2B0F8;
+  --cream-accent: #FFFDF0;      /* Warm Moon Glow Cream */
+  
+  --promise-green: #59D380;     /* Neon Promise Green */
+  --promise-green-glow: rgba(89, 211, 128, 0.4);
+  
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Poppins', var(--font-sans);
+  --font-serif: 'Playfair Display', Georgia, serif;
+}
+
+/* ==========================================================================
+   Global Reset & Structure
+   ========================================================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent; /* Disable highlight on mobile tap */
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrolling, cards handle layouts */
+  font-family: var(--font-sans);
+  color: var(--text-main);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Ambient Shifting Night Sky Gradient Background */
+  background: linear-gradient(-45deg, var(--bg-gradient-start), var(--bg-gradient-mid), var(--bg-gradient-end), #110826);
+  background-size: 400% 400%;
+  animation: gradientShift 18s ease infinite;
+  position: relative;
+}
+
+/* Base Viewport Container */
+.app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   The Glowing Moon Background Element (Chand with Pink Corona Glow)
+   ========================================================================== */
+.moon {
+  position: fixed;
+  top: 8%;
+  right: 12%;
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, #FFFDF0 0%, #FFEFA8 40%, #FFDF7A 100%);
+  border-radius: 50%;
+  box-shadow: 
+    0 0 60px rgba(255, 239, 168, 0.55), 
+    0 0 120px rgba(255, 117, 143, 0.38), /* Pink Corona Glow Layer */
+    0 0 200px rgba(255, 77, 109, 0.18);
+  z-index: 1;
+  pointer-events: none;
+  animation: moonPulse 8s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   Ambient Background Glowing Orbs (Nebula Dust - Recolored Pink-Purple)
+   ========================================================================== */
+.ambient-orbs-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.38;
+}
+
+.orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 117, 143, 0.45) 0%, rgba(0, 0, 0, 0) 70%); /* Romantic Pink Orb */
+  top: -8%;
+  left: -8%;
+  animation: orbFloat1 25s infinite ease-in-out;
+}
+
+.orb-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(123, 97, 255, 0.35) 0%, rgba(0, 0, 0, 0) 70%); /* Cosmic Purple Orb */
+  bottom: -12%;
+  right: -10%;
+  animation: orbFloat2 32s infinite ease-in-out;
+}
+
+.orb-3 {
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(255, 223, 122, 0.35) 0%, rgba(0, 0, 0, 0) 70%); /* Warm Golden Orb */
+  top: 35%;
+  right: 15%;
+  animation: orbFloat3 22s infinite ease-in-out;
+}
+
+/* Canvases */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#confetti-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Base Glassmorphism Card (Inherited by all custom shapes - Enlarged)
+   ========================================================================== */
+.card {
+  position: absolute;
+  width: 100%;
+  max-width: 500px; /* Increased from 440px for larger visual presence */
+  background: rgba(12, 17, 36, 0.52);
+  backdrop-filter: blur(28px) saturate(120%);
+  -webkit-backdrop-filter: blur(28px) saturate(120%);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px; /* Slightly more rounded for larger size */
+  padding: 2.75rem 2.5rem; /* Expanded padding */
+  box-shadow: 
+    0 25px 65px rgba(0, 0, 0, 0.48), 
+    0 0 35px var(--gold-glow), /* Golden lunar shadow halo */
+    0 0 15px rgba(255, 117, 143, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow: hidden; /* Bound stationery borders */
+  
+  /* Initial State for spring transitions */
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.9) translateY(40px);
+  pointer-events: none;
+  transition: 
+    opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+    transform 0.95s cubic-bezier(0.175, 0.885, 0.32, 1.15), 
+    visibility 0.8s;
+}
+
+/* Base states driven by JS navigation */
+.card.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+  pointer-events: auto;
+  z-index: 3;
+}
+
+.card.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.05) translateY(-30px);
+  pointer-events: none;
+}
+
+.card-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Stationery double-border frame (Gold outer & Pink inner dashed) */
+.stationery-frame {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  bottom: 12px;
+  right: 12px;
+  border: 1.5px solid var(--gold-accent); /* Solid Gold Frame */
+  border-radius: 20px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.stationery-frame::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  right: 4px;
+  border: 1px dashed rgba(255, 117, 143, 0.35); /* Dashed Pink Frame */
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+/* Diary Card Subtitles */
+.diary-header {
+  font-family: 'Caveat', cursive;
+  font-size: 1.55rem; /* Increased size */
+  font-weight: 700;
+  color: var(--text-light);
+  opacity: 0.85;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.8px;
+  text-transform: capitalize;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.diary-header.mini {
+  font-size: 1.25rem;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.5px;
+}
+
+/* ==========================================================================
+   Unique Card Shape Configurations (Geometric variety - Large & Gold)
+   ========================================================================== */
+
+/* 1. Polaroid Photo Card Frame (Screen 2) */
+.card-polaroid {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: 1.5px solid var(--gold-accent) !important; /* Gold frame accent */
+  border-radius: 8px !important;
+  padding-bottom: 4.5rem !important; /* Thick bottom border for photo note write space */
+  box-shadow: 
+    0 30px 70px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(230, 197, 102, 0.15),
+    0 1px 3px rgba(0,0,0,0.1) !important;
+  transform: scale(0.9) translateY(40px) rotate(0deg);
+}
+
+/* Override dark mode text inside light Polaroid frame */
+.card-polaroid .title,
+.card-polaroid .story-text {
+  color: #2D243A !important;
+}
+
+.card-polaroid .highlighted {
+  color: #D63353 !important;
+  text-shadow: none !important;
+}
+
+.card-polaroid .cursive-teaser {
+  color: #A32840 !important;
+}
+
+.card-polaroid .diary-header {
+  color: #7D6B8F !important;
+  text-shadow: none !important;
+}
+
+.card-polaroid .heart-svg {
+  fill: #FF5E7E !important;
+}
+
+/* Custom spring transitions + Polaroid angle tilt */
+.card-polaroid.active {
+  transform: scale(1) translateY(0) rotate(-2.5deg) !important;
+}
+
+/* Floating Tape Strip on Polaroid */
+.polaroid-tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+  width: 90px;
+  height: 25px;
+  background: rgba(230, 200, 120, 0.35); /* Warm golden tint */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  z-index: 5;
+}
+
+/* 2. Torn Ruled Notebook Diary Sheet (Screen 3) */
+.card-notebook {
+  background: rgba(253, 253, 250, 0.98) !important;
+  border-radius: 6px 8px 10px 16px !important;
+  /* Double red vertical margin border */
+  border-left: 4px double rgba(230, 50, 85, 0.45) !important;
+  border-right: 1px solid rgba(0, 0, 0, 0.03) !important;
+  border-top: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.04) !important;
+  padding: 3.75rem 2rem 2.5rem 2.75rem !important;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.48) !important;
+  
+  /* Ruled notebook line background gradient - slightly larger line spacing for large text */
+  background-image: linear-gradient(rgba(176, 154, 240, 0.15) 1px, transparent 1px) !important;
+  background-size: 100% 32px !important;
+  
+  /* Jagged top edge clip-path */
+  clip-path: polygon(
+    0% 5px, 5% 0px, 10% 5px, 15% 0px, 20% 5px, 25% 0px, 30% 5px, 35% 0px, 40% 5px, 45% 0px, 
+    50% 5px, 55% 0px, 60% 5px, 65% 0px, 70% 5px, 75% 0px, 80% 5px, 85% 0px, 90% 5px, 95% 0px, 
+    100% 5px, 100% 100%, 0% 100%
+  );
+  transform: scale(0.9) translateY(40px) rotate(0deg);
+}
+
+.card-notebook.active {
+  transform: scale(1) translateY(0) rotate(1.8deg) !important;
+}
+
+.card-notebook .story-text {
+  color: #3C2E4D !important;
+  line-height: 32px !important; /* Lock to ruled line heights */
+}
+
+.card-notebook .diary-header {
+  color: #8C789F !important;
+  text-shadow: none !important;
+  margin-top: -1rem;
+}
+
+.card-notebook .cursive-quote {
+  color: #D63353 !important;
+  text-shadow: none !important;
+}
+
+/* 3. Double Overlapping Glass Card (Screen 4) */
+.card-double-glass {
+  z-index: 3;
+}
+
+/* Absolute offset secondary glass layer */
+.card-double-glass::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 100%;
+  height: 100%;
+  background: rgba(12, 17, 36, 0.32);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+  z-index: -1;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+/* 4. Organic Leaf-Squircle (Screen 5) */
+.card-leaf-squircle {
+  border-radius: 120px 32px 120px 32px !important;
+  border-color: var(--gold-accent) !important; /* Gold border framing leaf */
+}
+
+.card-leaf-squircle .stationery-frame {
+  border-radius: 105px 24px 105px 24px !important;
+}
+
+.card-leaf-squircle .stationery-frame::after {
+  border-radius: 98px 20px 98px 20px !important;
+}
+
+/* 5. Scroll stationery paper layout (Screen 6) */
+.card-scroll {
+  border-radius: 6px !important;
+  border-top: 6px double var(--gold-accent) !important; /* Gold scroll scrollbars */
+  border-bottom: 6px double var(--gold-accent) !important;
+}
+
+/* 6. Capsule Layout (Screen 7) */
+.card-capsule {
+  border-radius: 50px !important;
+  border: 2px solid var(--gold-accent) !important; /* Gold frame accent */
+  box-shadow: 
+    0 0 25px rgba(230, 197, 102, 0.22),
+    0 25px 60px rgba(0, 0, 0, 0.45) !important;
+}
+
+.card-capsule .stationery-frame {
+  border-radius: 38px !important;
+}
+
+.card-capsule .stationery-frame::after {
+  border-radius: 33px !important;
+}
+
+/* 7. Starburst Glass Badge (Accepted screen) */
+.card-starburst {
+  border-radius: 40px !important;
+  border-color: var(--gold-accent) !important; /* Gold frame accent */
+  box-shadow: 
+    0 0 50px rgba(255, 117, 143, 0.35),
+    0 25px 60px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* 8. Playful Organic Squiggle cloud (Hug Screen) */
+.card-squiggle {
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50% !important;
+  border-color: var(--gold-accent) !important; /* Gold border accent */
+  animation: blobPulse 8s infinite ease-in-out;
+}
+
+@keyframes blobPulse {
+  0%, 100% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50% !important; }
+  50% { border-radius: 50% 50% 60% 40% / 50% 40% 70% 60% !important; }
+}
+
+/* ==========================================================================
+   Interactive Envelope (Screen 1 Navy layout)
+   ========================================================================== */
+.envelope-card {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  padding: 0 !important;
+}
+
+.envelope-wrapper {
+  perspective: 1000px;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+}
+
+.envelope {
+  position: relative;
+  width: 360px;
+  height: 240px;
+  background: rgba(14, 18, 42, 0.58);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 
+    0 22px 55px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+  transform-style: preserve-3d;
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  margin-top: 100px; /* Offset to allow paper to slide up */
+}
+
+/* 3D Envelope Flap */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(22, 28, 62, 0.88);
+  border-radius: 20px 20px 0 0;
+  clip-path: polygon(0 0, 50% 52%, 100% 0);
+  transform-origin: top;
+  transition: transform 0.6s ease-in-out, z-index 0.3s;
+  z-index: 4;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+/* Front Pocket */
+.envelope-front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(13, 17, 39, 0.75);
+  border-radius: 0 0 20px 20px;
+  clip-path: polygon(0 40%, 50% 72%, 100% 40%, 100% 100%, 0 100%);
+  z-index: 3;
+}
+
+/* Letter inside the envelope */
+.envelope-paper {
+  position: absolute;
+  bottom: 8px;
+  left: 5%;
+  width: 90%;
+  height: 224px;
+  background: rgba(12, 17, 36, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(0) scale(0.95);
+  transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.7s, z-index 0.5s;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.letter-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.letter-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  font-family: var(--font-sans);
+}
+
+/* Wax Seal Buttons (Gold crescent moon seal) */
+.wax-seal-wrapper {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  text-align: center;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.wax-seal {
+  background: linear-gradient(135deg, var(--gold-accent) 0%, #D4AF37 100%); /* Solid gold seal */
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    0 6px 20px rgba(230, 197, 102, 0.5),
+    inset 0 1px 2px rgba(255,255,255,0.4);
+  margin: 0 auto;
+  transition: all 0.3s ease;
+  animation: sealPulse 1.8s infinite;
+}
+
+.wax-seal:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 24px rgba(230, 197, 102, 0.65);
+}
+
+.wax-heart {
+  font-size: 2.1rem;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.seal-tap-text {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-top: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  animation: pulse-light 1.8s infinite;
+}
+
+/* Envelope Open State Actions */
+.envelope.open {
+  transform: translateY(20px);
+}
+
+.envelope.open .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1; /* Hide behind paper as it flips up */
+}
+
+.envelope.open .envelope-paper {
+  transform: translateY(-155px) scale(1.04);
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 5; /* Slide out in front */
+}
+
+.envelope.open .wax-seal-wrapper {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+}
+
+.btn-letter {
+  padding: 0.65rem 1.75rem;
+  font-size: 0.9rem;
+  border-radius: 20px;
+}
+
+/* ==========================================================================
+   Calligraphy Cursive Typography (Enlarged and Glowing)
+   ========================================================================== */
+.cursive-hi {
+  font-family: 'Sacramento', cursive;
+  font-size: 3.8rem; /* Increased size */
+  font-weight: 700;
+  color: #FFA3B5;
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 0 18px rgba(255, 117, 143, 0.3);
+}
+
+.handwritten-heart {
+  font-size: 1.65rem;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.cursive-teaser {
+  font-family: 'Caveat', cursive;
+  font-size: 2.1rem; /* Increased size */
+  font-weight: 700;
+  color: var(--primary-pink);
+  margin: 0.5rem 0;
+  letter-spacing: 0.5px;
+}
+
+.cursive-quote {
+  font-family: 'Sacramento', cursive;
+  font-size: 3.2rem; /* Increased size */
+  font-weight: 700;
+  color: #FF5A79;
+  display: block;
+  margin: 0.75rem 0;
+  line-height: 1.2;
+  text-shadow: 0 0 25px rgba(255, 77, 109, 0.4);
+}
+
+.cursive-highlight {
+  font-family: 'Caveat', cursive;
+  font-size: 2.2rem; /* Increased size */
+  font-weight: 700;
+  color: #FF859C;
+  line-height: 1.3;
+}
+
+.cursive-love {
+  font-family: 'Sacramento', cursive;
+  font-size: 3.8rem; /* Increased size */
+  font-weight: 700;
+  color: #FF5A79;
+  margin-top: 1.25rem;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(255, 77, 109, 0.45));
+}
+
+/* ==========================================================================
+   Cinematic Sequential Stagger Reveals
+   ========================================================================== */
+.card .stagger-1,
+.card .stagger-2,
+.card .stagger-3,
+.card .stagger-4,
+.card .stagger-5,
+.card .stagger-6,
+.card .stagger-7 {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: 
+    opacity 0.7s cubic-bezier(0.25, 1, 0.5, 1), 
+    transform 0.75s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Activate transitions when card is active */
+.card.active .stagger-1 { opacity: 1; transform: translateY(0); transition-delay: 0.2s; }
+.card.active .stagger-2 { opacity: 1; transform: translateY(0); transition-delay: 0.45s; }
+.card.active .stagger-3 { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+.card.active .stagger-4 { opacity: 1; transform: translateY(0); transition-delay: 0.95s; }
+.card.active .stagger-5 { opacity: 1; transform: translateY(0); transition-delay: 1.2s; }
+.card.active .stagger-6 { opacity: 1; transform: translateY(0); transition-delay: 1.45s; }
+.card.active .stagger-7 { opacity: 1; transform: translateY(0); transition-delay: 1.7s; }
+
+/* ==========================================================================
+   Typography & Elements (Scaled up for legibility)
+   ========================================================================== */
+.title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 7vw, 2.9rem); /* Increased size */
+  line-height: 1.2;
+  color: var(--text-main);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.subtitle {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: clamp(1.15rem, 3.8vw, 1.35rem); /* Increased size */
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.story-text {
+  font-family: var(--font-sans);
+  font-size: clamp(1.18rem, 3.8vw, 1.38rem); /* Increased size */
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.story-text:last-of-type {
+  margin-bottom: 2rem;
+}
+
+.text-group {
+  margin: 1.5rem 0;
+  width: 100%;
+}
+
+.highlighted {
+  color: var(--primary-pink);
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(255, 117, 143, 0.15);
+}
+
+.highlighted-rose {
+  color: var(--primary-pink);
+  font-weight: 600;
+  font-size: clamp(1.18rem, 3.8vw, 1.38rem);
+}
+
+.bullet-heart {
+  color: var(--primary-pink);
+  margin-right: 4px;
+}
+
+.divider {
+  width: 50px;
+  height: 2.5px;
+  background: rgba(255, 117, 143, 0.25);
+  margin: 1.5rem auto;
+  border-radius: 2px;
+}
+
+.sub-info {
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 1.05rem; /* Increased size */
+  margin-bottom: 0.5rem;
+}
+
+.highlight-uncomfortable {
+  font-weight: 600;
+  color: #FF5A79; /* A soft warning pink to denote genuine discomfort */
+  background: rgba(255, 117, 143, 0.08);
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  box-shadow: 0 0 15px rgba(255, 117, 143, 0.05);
+}
+
+.footer-text {
+  font-weight: 500;
+  color: var(--primary-pink);
+  font-size: 1.1rem;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.18rem, 3.8vw, 1.45rem);
+}
+
+.font-lg {
+  font-size: clamp(1.22rem, 4vw, 1.5rem);
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Icons & Decorative Animations
+   ========================================================================== */
+.emoji-header {
+  font-size: 3.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.flower-icon {
+  font-size: 3.2rem;
+  margin-bottom: 1.25rem;
+}
+
+.heart-explosion-icon {
+  font-size: 4.2rem;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 8px 12px rgba(255, 117, 143, 0.2));
+}
+
+.hug-emoji {
+  font-size: 4.8rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Pulsing SVGs */
+.heart-pulse-container {
+  width: 85px;
+  height: 85px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.heart-pulse-container.large {
+  width: 105px;
+  height: 105px;
+}
+
+.heart-svg {
+  width: 100%;
+  height: 100%;
+  fill: var(--primary-pink);
+  filter: drop-shadow(0 0 15px var(--primary-pink-glow));
+  animation: heartPulse 1.6s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.heart-svg.rose-color {
+  fill: #FF5A79;
+}
+
+/* Double Hearts Layout */
+.double-hearts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  height: 80px;
+}
+
+.mini-heart {
+  font-size: 3.8rem;
+  filter: drop-shadow(0 0 12px rgba(255, 117, 143, 0.3));
+}
+
+.heart-left {
+  animation: heartbeat-left 2s infinite ease-in-out;
+}
+
+.heart-right {
+  animation: heartbeat-right 2s infinite ease-in-out;
+  animation-delay: 0.3s;
+}
+
+/* ==========================================================================
+   Interactive Controls & Buttons
+   ========================================================================== */
+/* Music Controls Floating Element */
+.music-controller {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 100;
+}
+
+.music-btn {
+  background: rgba(12, 17, 36, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.music-btn:hover {
+  transform: scale(1.08);
+  background: rgba(12, 17, 36, 0.7);
+  box-shadow: 0 6px 20px rgba(123, 97, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.music-icon {
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 2px #fff);
+}
+
+.music-btn.playing .music-icon {
+  transform: rotate(360deg);
+  animation: musicSpin 6s infinite linear;
+}
+
+/* Audio waves animation */
+.music-waves {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2.5px;
+  position: absolute;
+  bottom: 8px;
+  height: 10px;
+}
+
+.wave {
+  width: 2px;
+  height: 2px;
+  background-color: var(--primary-pink);
+  border-radius: 1px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.music-btn.playing .wave {
+  opacity: 0.85;
+}
+
+.wave-1 { animation: wavePulse 1.2s ease infinite alternate; }
+.wave-2 { animation: wavePulse 0.9s ease infinite alternate; animation-delay: 0.15s; }
+.wave-3 { animation: wavePulse 1.4s ease infinite alternate; animation-delay: 0.3s; }
+
+/* Buttons styling (Cosmic gradients purple-pink) */
+.btn {
+  font-family: var(--font-heading);
+  font-size: 1.05rem; /* Slightly larger */
+  font-weight: 600;
+  padding: 0.9rem 2.4rem; /* Expanded padding */
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  letter-spacing: -0.2px;
+  position: relative;
+}
+
+.btn-primary {
+  color: #FFF;
+  background: linear-gradient(135deg, #7B61FF 0%, #FF758F 100%);
+  box-shadow: 0 8px 24px rgba(123, 97, 255, 0.35);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(123, 97, 255, 0.5);
+  background: linear-gradient(135deg, #6C52EE 0%, #FF5A79 100%);
+}
+
+.btn-primary:active {
+  transform: translateY(-1px);
+}
+
+/* Decision Area Buttons (Final screen) */
+.decision-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  position: relative;
+}
+
+.btn-promise {
+  color: #FFF;
+  background: linear-gradient(135deg, #57CD7D 0%, var(--promise-green) 100%);
+  box-shadow: 0 8px 24px var(--promise-green-glow);
+}
+
+.btn-promise:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(76, 175, 80, 0.45);
+  background: linear-gradient(135deg, #43C06B 0%, #3E8E41 100%);
+}
+
+.btn-promise:active {
+  transform: translateY(-1px);
+}
+
+.btn-hug {
+  color: #E2D7F5;
+  background: rgba(12, 17, 36, 0.6);
+  border: 1.5px solid rgba(176, 154, 240, 0.28);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  z-index: 5;
+}
+
+.btn-hug:hover {
+  background: rgba(12, 17, 36, 0.85);
+  box-shadow: 0 8px 20px rgba(123, 97, 255, 0.15);
+  color: var(--primary-pink);
+  border-color: var(--primary-pink);
+}
+
+.btn-emoji {
+  font-size: 1.15rem;
+}
+
+/* ==========================================================================
+   Animations Keyframes
+   ========================================================================== */
+@keyframes heartPulse {
+  0% { transform: scale(1); }
+  14% { transform: scale(1.18); }
+  28% { transform: scale(1.04); }
+  42% { transform: scale(1.22); }
+  70% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes heartbeat-left {
+  0%, 100% { transform: scale(1) rotate(-10deg); }
+  50% { transform: scale(1.12) rotate(-5deg); }
+}
+
+@keyframes heartbeat-right {
+  0%, 100% { transform: scale(1) rotate(10deg); }
+  50% { transform: scale(1.12) rotate(5deg); }
+}
+
+@keyframes pulse-light {
+  0%, 100% { opacity: 0.95; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes wavePulse {
+  0% { height: 2px; }
+  100% { height: 16px; }
+}
+
+@keyframes musicSpin {
+  100% { transform: rotate(360deg); }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s infinite ease-in-out;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-wobble {
+  animation: wobble 2.5s infinite ease-in-out;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg) scale(1.05); }
+  75% { transform: rotate(5deg) scale(1.05); }
+}
+
+.animate-heartbeat {
+  animation: heartbeat-large 2s infinite ease-in-out;
+}
+
+@keyframes heartbeat-large {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); color: #FF4D6D; }
+}
+
+@keyframes sealPulse {
+  0%, 100% { transform: scale(1) translate(0, 0); box-shadow: 0 6px 20px rgba(230, 197, 102, 0.5); }
+  50% { transform: scale(1.06) translate(0, -1px); box-shadow: 0 8px 25px rgba(230, 197, 102, 0.65); }
+}
+
+@keyframes orbFloat1 {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, 60px) scale(1.12); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes orbFloat2 {
+  0% { transform: translate(0, 0) scale(1.1); }
+  50% { transform: translate(-60px, -40px) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1.1); }
+}
+
+@keyframes orbFloat3 {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -40px) scale(1.15); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes moonPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 60px rgba(255, 239, 168, 0.55), 0 0 120px rgba(255, 117, 143, 0.38), 0 0 200px rgba(255, 77, 109, 0.18); }
+  50% { transform: scale(1.04); box-shadow: 0 0 80px rgba(255, 239, 168, 0.7), 0 0 150px rgba(255, 117, 143, 0.55), 0 0 250px rgba(255, 77, 109, 0.3); }
+}
+
+/* ==========================================================================
+   Mobile-First Responsiveness (Media Queries)
+   ========================================================================== */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 1rem;
+    align-items: center; /* Center vertically on mobile viewport */
+  }
+  
+  .card {
+    border-radius: 24px;
+    padding: 2.25rem 1.5rem; /* Balanced padded layout */
+  }
+  
+  .card-polaroid {
+    padding-bottom: 4rem !important;
+  }
+  
+  .card-notebook {
+    padding: 3.25rem 1.5rem 2rem 2rem !important;
+  }
+  
+  .stationery-frame {
+    top: 10px;
+    left: 10px;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 15px;
+  }
+  
+  .stationery-frame::after {
+    border-radius: 12px;
+  }
+  
+  .envelope-card {
+    width: 100% !important;
+  }
+  
+  .envelope-wrapper {
+    height: 340px;
+  }
+  
+  .envelope {
+    width: 320px;
+    height: 220px;
+  }
+  
+  .envelope-flap {
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+  }
+  
+  .envelope-front {
+    clip-path: polygon(0 40%, 50% 68%, 100% 40%, 100% 100%, 0 100%);
+  }
+  
+  .envelope-paper {
+    height: 210px;
+    padding: 1.15rem;
+  }
+  
+  .letter-text {
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .cursive-hi {
+    font-size: 3.1rem;
+  }
+  
+  .envelope.open .envelope-paper {
+    transform: translateY(-135px) scale(1.02);
+  }
+  
+  .wax-seal {
+    width: 58px;
+    height: 58px;
+  }
+  
+  .wax-heart {
+    font-size: 1.8rem;
+  }
+  
+  .decision-buttons {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  
+  .btn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.98rem;
+  }
+  
+  .title {
+    margin-bottom: 1rem;
+  }
+  
+  .story-text {
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+  }
+  
+  .music-controller {
+    top: 1rem;
+    right: 1rem;
+  }
+  
+  .music-btn {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .text-left-mobile {
+    text-align: left;
+  }
+  
+  .text-left-mobile .card-content {
+    align-items: flex-start;
+  }
+  
+  .request-list {
+    width: 100%;
+  }
+  
+  .request-item {
+    font-size: 1.02rem;
+    line-height: 1.5;
+    margin-bottom: 0.85rem !important;
+  }
+  
+  .divider {
+    margin: 1.25rem 0;
+  }
+  
+  .highlight-uncomfortable {
+    padding: 0.5rem 1rem;
+    font-size: 1.02rem;
+    margin-bottom: 0.85rem;
+  }
+  
+  .cursive-quote {
+    font-size: 2.7rem;
+  }
+  
+  .cursive-love {
+    font-size: 3.1rem;
+  }
+  
+  .moon {
+    width: 90px;
+    height: 90px;
+    top: 5%;
+    right: 5%;
+  }
+}
+
+/* Fix for taller devices/iPad to keep it highly centered & responsive */
+@media (min-height: 800px) {
+  .card {
+    padding: 2.75rem 2.25rem;
+  }
+}
